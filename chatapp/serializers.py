@@ -1,7 +1,8 @@
-from django.contrib.auth.models import User
-from rest_framework import serializers
-from chat.models import Message
 
+from django.contrib.auth.models import User
+from django.db.models import fields
+from rest_framework import serializers
+from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -9,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'password']
-
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.SlugRelatedField(many=False, slug_field='username', queryset=User.objects.all())
